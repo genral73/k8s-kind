@@ -53,7 +53,7 @@ kubectl apply -f ingress-nginx.yaml
 ## Step 4: Verify and deploy examples on kind cluster
 Verify that kind cluster is installed correctly by creating examples, we have 2 examples uses the [hashicorp/http-echo](https://hub.docker.com/r/hashicorp/http-echo) image just print text when are access the pod throurg path or host-subdomain of serveice.
   
- <img src="images/os-examples.png" />
+ <img src="images/os-examples.png"  />
 <br/>
 
 #### Example 1: Access to service by using the path like [ /ubuntu or /redhat ] 
