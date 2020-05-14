@@ -44,6 +44,14 @@ docker update --restart=always bf7f67675958
 kind get clusters
 kubectl cluster-info --context kind-kind01
 ```
+
+4. To delete te kind01 cluster use:
+```shell
+docker stop kind01-control-plane kind01-worker kind01-worker2
+docker rm kind01-control-plane kind01-worker kind01-worker2
+kind delete cluster
+```
+
 ## Step 3: Enabling the ingress/nginx by apply this file inro kind cluster
 ```bash
 kubectl apply -f ingress-nginx.yaml
