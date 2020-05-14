@@ -1,0 +1,76 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: andriod-os
+  labels:
+    app: andriod
+spec:
+  containers:
+  - name: andriod-os
+    image: hashicorp/http-echo
+    args:
+    - "-text=Welcome To Andriod OS"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: andriod-service
+spec:
+  selector:
+    app: andriod
+  ports:
+  # Default port used by the image
+  - port: 5678
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: ios-os
+  labels:
+    app: ios
+spec:
+  containers:
+  - name: ios-os
+    image: hashicorp/http-echo
+    args:
+    - "-text=Welcome To ios OS"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ios-service
+spec:
+  selector:
+    app: ios
+  ports:
+  # Default port used by the image
+  - port: 5678
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: os-andriod-ingress
+spec:
+  rules:
+  - host: andriod.localhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: andriod-service
+          servicePort: 5678
+---
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: os-ios-ingress
+spec:
+  rules:
+  - host: ios.localhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ios-service
+          servicePort: 5678

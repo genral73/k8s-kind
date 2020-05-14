@@ -1,0 +1,65 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: ubuntu-os
+  labels:
+    app: ubuntu
+spec:
+  containers:
+  - name: ubuntu-os
+    image: hashicorp/http-echo
+    args:
+    - "-text=Welcome To Ubuntu OS"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ubuntu-service
+spec:
+  selector:
+    app: ubuntu
+  ports:
+  # Default port used by the image
+  - port: 5678
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: redhat-app
+  labels:
+    app: redhat
+spec:
+  containers:
+  - name: redhat-app
+    image: hashicorp/http-echo
+    args:
+    - "-text=Welcome To Redhat OS"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: redhat-service
+spec:
+  selector:
+    app: redhat
+  ports:
+  # Default port used by the image
+  - port: 5678
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: os-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /ubuntu
+        backend:
+          serviceName: ubuntu-service
+          servicePort: 5678
+      - path: /redhat
+        backend:
+          serviceName: redhat-service
+          servicePort: 5678
+---
